@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-header {
+    background-color: #0077cc;
+}
+
+.logo img {
+    max-height: 50px;
+}
+
+.nav .nav-link {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-right: 20px;
+    transition: color 0.3s ease;
+}
+
+.nav .nav-link:hover {
+    color: #2a2b2a;
+}
+
+.navbar-brand {
+    color: #f8f9fa;
+    font-size: 21px; 
+    transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: #2a2b2a;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+    flex: 1;
+}
+
+h2, .footer-brand {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.form-container {
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0077cc;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-control {
+    border: 1px solid #0077cc;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 16px;
+}
+
+button {
+    background: #0077cc;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 20px;
+}
+
+button:hover {
+    background: #2a2b2a;
+}
+
+p {
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+}
+
+.custom-footer {
+    background-color: #0077cc;
+    color: white ;
+    text-align: center;
+    margin-top: auto;
+}
+
+.custom-footer .footer-brand {
+    font-weight: bold;
+    font-size: 21px; 
+}
+
+.custom-footer img {
+    height: 50px;
+}
+
+.custom-footer .footer-text {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+    .nav .nav-link {
+        font-size: 16px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+}

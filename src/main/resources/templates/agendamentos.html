@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedimentos Odontológicos</title>
+    <link rel="stylesheet" href="css/crud.css">
+    <script defer src="script/agendamentos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+    <header class="custom-header">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="logo d-flex align-items-center">
+                <a class="navbar-brand" href="/"><img src="assets/Logoo.png" alt="Logo" height="40"> Clínica Odontológica</a>
+            </div>
+            <nav>
+            <ul class="nav" id="lista">
+        <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+        <li class="nav-item d-none" id="menu-agendamentos"><a class="nav-link" href="/agendamentos.html">Agendamentos</a></li>
+        <li class="nav-item d-none" id="menu-crud"><a class="nav-link" href="/crud.html">Gerenciar</a></li>
+        <li class="nav-item d-none" id="menu-login"><a class="nav-link" href="/login.html">Login</a></li>
+        <li class="nav-item d-none" id="menu-logout"><a class="nav-link" href="#" id="logout-link">Logout</a></li>
+    </ul>
+</nav>
+
+        </div>
+    </header>
+
+    <div class="container1">
+        <h2>Lista de Agendamentos</h2>
+        <div class="controls">
+            <input type="text" id="search" class="form-control" placeholder="Buscar procedimento...">
+            <button class="btn btn-primary" onclick="buscarAgendamento()">Buscar</button>
+        </div>
+
+        <div class="table-container">
+<table class="table">
+    <thead>
+        <tr>
+            <thead>
+    <tr>
+        <th>Procedimento</th>
+        <th>Cliente</th>
+        <th>Profissional</th>
+        <th>Data</th>
+        <th>Status</th> 
+    </tr>
+</thead>
+
+        </tr>
+    </thead>
+    <tbody id="procedimentos-table"></tbody>
+</table>
+
+        </div>
+    </div>
+
+
+</body>
+</html>

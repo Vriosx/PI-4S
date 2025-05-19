@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contato - Clínica Odontológica</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/contato.css" />
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="script/admin.js" defer></script>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="custom-header">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="logo d-flex align-items-center">
+        <a class="navbar-brand" href="/">
+          <img src="assets/Logoo.png" alt="Logo" height="40" />
+          Clínica Odontológica
+        </a>
+      </div>
+      <nav>
+        <ul class="nav" id="lista">
+          <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="#equipe">Equipe</a></li>
+          <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+          <li class="nav-item d-none" id="menu-agendamentos">
+            <a class="nav-link" href="/agendamentos">Meus Agendamentos</a>
+          </li>
+          <li class="nav-item" id="menu-login"><a class="nav-link" href="/entrar-cadastrar">Entrar/Cadastrar</a></li>
+          <li class="nav-item d-none" id="menu-logout"><a class="nav-link" href="#" id="logout-link">Sair</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="container mt-4">
+    <section class="row">
+      <div class="col-md-6 info-section">
+        <h2 class="Cont">Fale Conosco</h2>
+        <h4>Estamos disponíveis para atendê-lo(a) da melhor forma</h4>
+        <div class="contact-info">
+          <div class="contact-item d-flex align-items-center mb-2">
+            <img src="assets/telefone.png" alt="WhatsApp" class="mr-2" style="max-height: 30px;" />
+            <span>+55 11 1234-5678</span>
+          </div>
+          <div class="contact-item d-flex align-items-center mb-2">
+            <img src="assets/Email.png" alt="E-mail" class="mr-2" style="max-height: 30px;" />
+            <span>contato@clinicaodontologica.com.br</span>
+          </div>
+          <div class="contact-item d-flex align-items-center mb-2">
+            <img src="assets/Icon.png" alt="Endereço" class="mr-2" style="max-height: 30px;" />
+            <span>Rua da Saúde, 123 - São Paulo, SP</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 form-section">
+        <h2>Preencha o Formulário</h2>
+        <form id="formContato" action="" method="POST">
+          <div class="form-group">
+            <label for="nome">Nome do Paciente:</label>
+            <input type="text" id="nome" name="nome" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label for="whatsapp">Número WhatsApp:</label>
+            <input type="text" id="whatsapp" name="whatsapp" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label for="procedimento">Escolha o Procedimento:</label>
+            <select id="procedimento" name="procedimento" class="form-control" required>
+              <option value="">Selecione</option>
+              <!-- opções serão carregadas dinamicamente -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="profissional">Profissional Responsável:</label>
+            <select id="profissional" name="profissional" class="form-control" disabled>
+              <option value="">Selecione um procedimento primeiro</option>
+            </select>
+          </div>
+
+          <div id="selecaoHorario" class="mt-4" style="display: none;">
+            <h4>Escolha a data e o horário:</h4>
+            <div class="row" id="datas-container"></div>
+          </div>
+
+          <input type="hidden" id="horario" name="horario" />
+
+		<button type="submit" id="enviar" class="btn btn-primary">Agendar</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="custom-footer mt-4">
+    <div class="container py-3 text-center">
+      <div class="footer-brand d-flex align-items-center justify-content-center">
+        <span>Clínica Odontológica</span>
+        <img src="assets/Logoo.png" alt="Logo da Clínica" class="ml-2" style="max-height: 50px;" />
+      </div>
+      <p class="footer-text mt-3">
+        &copy; 2024 Clínica Odontológica. Todos os direitos reservados.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Script: Agendamento -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const procedimentoSelect = document.getElementById('procedimento');
+  const profissionalSelect = document.getElementById('profissional');
+  const selecaoHorario = document.getElementById('selecaoHorario');
+  const datasContainer = document.getElementById('datas-container');
+  const horarioInput = document.getElementById('horario');
+  const enviarButton = document.getElementById('enviar');
+  const formContato = document.getElementById('formContato');
+
+  let listaProcedimentos = [];
+
+  // Carrega procedimentos do backend
+  async function carregarProcedimentos() {
+    try {
+      const response = await fetch("http://localhost:8080/procedimentos");
+      if (!response.ok) throw new Error("Erro ao buscar procedimentos");
+
+      listaProcedimentos = await response.json();
+
+      procedimentoSelect.innerHTML = '<option value="">Selecione</option>';
+listaProcedimentos.forEach(proc => {
+  const nomeProcedimento = proc.nomePro || `Procedimento ${proc.nomePro}`;
+  const option = document.createElement("option");
+  option.value = proc.id;
+  option.textContent = nomeProcedimento;
+  procedimentoSelect.appendChild(option);
+});
+
+    } catch (error) {
+      console.error("Erro ao carregar procedimentos:", error);
+      alert("Erro ao carregar os procedimentos. Tente novamente mais tarde.");
+    }
+  }
+
+  // Atualiza a lista de profissionais com base no procedimento selecionado
+  function atualizarProfissional() {
+    const procedimentoId = procedimentoSelect.value;
+    const procedimentoSelecionado = listaProcedimentos.find(p => p.id == procedimentoId);
+
+    profissionalSelect.innerHTML = '';
+    profissionalSelect.disabled = true;
+
+    if (procedimentoSelecionado && procedimentoSelecionado.responsavel) {
+      const option = document.createElement('option');
+      option.value = procedimentoSelecionado.responsavel.toLowerCase().replace(/\s+/g, '_');
+      option.textContent = procedimentoSelecionado.responsavel;
+      profissionalSelect.appendChild(option);
+      profissionalSelect.disabled = false;
+    } else {
+      const option = document.createElement('option');
+      option.value = '';
+      option.textContent = 'Selecione um procedimento primeiro';
+      profissionalSelect.appendChild(option);
+    }
+
+    selecaoHorario.style.display = procedimentoId ? 'block' : 'none';
+    if (procedimentoId) atualizarHorarios();
+    else datasContainer.innerHTML = '';
+    horarioInput.value = '';
+  }
+
+  // Gera as próximas 3 datas úteis disponíveis (sem sáb/dom)
+  function gerarDatasDisponiveis() {
+    const datas = [];
+    const hoje = new Date();
+    let diasAdicionados = 0;
+    let diaAtual = new Date(hoje);
+
+    while (diasAdicionados < 3) {
+      diaAtual.setDate(diaAtual.getDate() + 1);
+      if (diaAtual.getDay() !== 0 && diaAtual.getDay() !== 6) { // ignora domingo e sábado
+        datas.push(new Date(diaAtual));
+        diasAdicionados++;
+      }
+    }
+    return datas;
+  }
+
+  // Gera horários disponíveis (8h às 18h, de hora em hora)
+  function gerarHorariosDisponiveis() {
+    const horarios = [];
+    for (let hora = 8; hora <= 18; hora++) {
+      horarios.push(`${String(hora).padStart(2, '0')}:00`);
+    }
+    return horarios;
+  }
+
+  // Atualiza os horários disponíveis na UI
+  function atualizarHorarios() {
+    datasContainer.innerHTML = '';
+    const datas = gerarDatasDisponiveis();
+    const horarios = gerarHorariosDisponiveis();
+
+    datas.forEach(data => {
+      const col = document.createElement('div');
+      col.className = 'col-md-4 mb-3';
+
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const cardBody = document.createElement('div');
+      cardBody.className = 'card-body';
+
+      const titulo = document.createElement('h5');
+      titulo.className = 'card-title';
+      titulo.textContent = data.toLocaleDateString('pt-BR', {
+        weekday: 'short',
+        day: '2-digit',
+        month: '2-digit'
+      }).replace(',', '');
+
+      cardBody.appendChild(titulo);
+
+      // Para demo, seleciona 3 horários aleatórios para cada dia
+      const horariosDisponiveis = [...horarios].sort(() => 0.5 - Math.random()).slice(0, 3);
+
+      horariosDisponiveis.forEach(horario => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn btn-outline-primary btn-sm m-1';
+        btn.textContent = horario;
+
+        btn.addEventListener('click', () => {
+          // Remove seleção anterior
+          document.querySelectorAll('#datas-container .btn').forEach(b => {
+            b.classList.remove('btn-primary', 'active');
+            b.classList.add('btn-outline-primary');
+          });
+
+          // Marca o botão clicado
+          btn.classList.add('btn-primary', 'active');
+          btn.classList.remove('btn-outline-primary');
+
+          // Formata a data + hora para ISO (ex: 2024-05-20T10:00:00)
+          const dataISO = data.toISOString().split('T')[0];
+          horarioInput.value = `${dataISO}T${horario}:00`;
+        });
+
+        cardBody.appendChild(btn);
+      });
+
+      card.appendChild(cardBody);
+      col.appendChild(card);
+      datasContainer.appendChild(col);
+    });
+  }
+
+  // Envia o formulário de agendamento para o backend
+  async function enviarAgendamento(event) {
+    event.preventDefault();
+
+    if (!formContato.checkValidity()) {
+      alert("Por favor, preencha todos os campos corretamente.");
+      return;
+    }
+
+    if (!horarioInput.value) {
+      alert("Por favor, selecione um horário.");
+      return;
+    }
+
+    const procedimentoSelecionado = listaProcedimentos.find(
+      p => p.id == procedimentoSelect.value
+    );
+
+    if (!procedimentoSelecionado) {
+      alert("Por favor, selecione um procedimento válido.");
+      return;
+    }
+
+    const dadosAgendamento = {
+      nome: formContato.nome.value,
+      whatsapp: formContato.whatsapp.value,
+      email: formContato.email.value,
+      dataHoraAgendamento: horarioInput.value,
+      status: "Agendado",
+      procedimento: procedimentoSelecionado.nomePro,
+      profissional: procedimentoSelecionado.responsavel,
+      emailProfissional: procedimentoSelecionado.emailResponsavel  // deve vir do backend
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/consultasAgendadas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dadosAgendamento)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Erro ao agendar");
+      }
+
+      const resultado = await response.json();
+      alert(`Agendamento realizado com sucesso!`);
+
+      // Reseta formulário e UI
+      formContato.reset();
+      procedimentoSelect.value = "";
+      profissionalSelect.innerHTML = '<option value="">Selecione um procedimento primeiro</option>';
+      profissionalSelect.disabled = true;
+      selecaoHorario.style.display = 'none';
+      horarioInput.value = '';
+      datasContainer.innerHTML = '';
+
+    } catch (error) {
+      console.error("Erro no agendamento:", error);
+      alert(`Erro ao realizar o agendamento: ${error.message}`);
+    }
+  }
+
+  // Eventos
+  procedimentoSelect.addEventListener('change', atualizarProfissional);
+  enviarButton.addEventListener('click', enviarAgendamento);
+
+  // Inicializa procedimentos
+  carregarProcedimentos();
+});
+
+  </script>
+</body>
+</html>

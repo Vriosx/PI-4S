@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Clínica Odontológica</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="script/admin.js" defer></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="assets/Logoo.png" alt="Logo" height="40"> Clínica
+                Odontológica</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="lista">
+                    <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#procedimentos" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown">Procedimentos</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#procedimentos">Limpeza</a></li>
+                            <li><a class="dropdown-item" href="#procedimentos">Restauração</a></li>
+                            <li><a class="dropdown-item" href="#procedimentos">Clareamento</a></li>
+                            <li><a class="dropdown-item" href="#procedimentos">Implantes</a></li>
+                            <li><a class="dropdown-item" href="#procedimentos">Canal</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#equipe">Equipe</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+
+                    <!-- Menus que podem ser ocultados -->
+                    <li class="nav-item d-none" id="menu-agendamentos">
+                        <a class="nav-link" th:href="@{/agendamentos}">Meus Agendamentos</a>
+                    </li>
+                
+                    <li class="nav-item d-none" id="menu-crud">
+                        <a class="nav-link" th:href="@{/crud}">Gerenciamento</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/contato}">Agendar</a>
+                    </li>
+
+                    <li class="nav-item d-none" id="menu-logout">
+                        <a class="nav-link" id="logout-link">Sair</a>
+                    </li>
+
+                    <li class="nav-item" id="menu-login">
+                        <a class="nav-link" th:href="@{/entrar-cadastrar}">Entrar/Cadastrar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container text-center py-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1>Bem-vindo à <span class="text-primary">Senna Smile</span></h1>
+                <p>Oferecemos serviços odontológicos de qualidade para cuidar do seu sorriso...</p>
+            </div>
+            <div class="col-md-6">
+                <img src="assets/Doutoor.png" class="img-fluid" alt="Clínica">
+            </div>
+        </div>
+    </section>
+
+    <section class="container py-5" id="procedimentos">
+        <h2 class="text-center mb-4">Nossos Procedimentos</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="assets/limpeza.jpg" class="card-img-top" alt="Limpeza">
+                            <div class="card-body">
+                                <h5 class="card-title">Limpeza Dental</h5>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <p>O procedimento de limpeza dental é essencial para a manutenção da saúde bucal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="assets/restauracao.png" class="card-img-top" alt="Restauração">
+                            <div class="card-body">
+                                <h5 class="card-title">Restauração</h5>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <p>Restauração de dentes com cárie ou outros danos para recuperar sua função e estética.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="assets/clareamento.jpg" class="card-img-top" alt="Clareamento">
+                            <div class="card-body">
+                                <h5 class="card-title">Clareamento Dental</h5>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <p>O clareamento dental é um tratamento estético para dentes mais brancos e radiantes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container py-5" id="equipe">
+        <h2 class="text-center mb-4">Nossa Equipe</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="assets/dentista1.jpg" class="card-img-top" alt="Dentista 1">
+                            <div class="card-body">
+                                <h5 class="card-title">Dr. João Silva</h5>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <p>Dentista especializado em ortodontia com mais de 10 anos de experiência.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="assets/dentista2.jpg" class="card-img-top" alt="Dentista 2">
+                            <div class="card-body">
+                                <h5 class="card-title">Dra. Maria Souza</h5>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <p>Especialista em endodontia, cuidando da saúde dos seus dentes com carinho e precisão.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="assets/dentista3.jpg" class="card-img-top" alt="Dentista 3">
+                            <div class="card-body">
+                                <h5 class="card-title">Dr. Carlos Almeida</h5>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <p>Com ampla experiência em estética dental, oferece tratamentos personalizados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container py-5" id="sobre">
+        <h2 class="text-center mb-4">Sobre a Senna Smile</h2>
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <img src="assets/teste.png" alt="Clínica" class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <p class="sob">
+                    Seu sorriso, nossa prioridade. Oferecemos serviços odontológicos completos, desde prevenção e
+                    diagnóstico até tratamentos avançados como implantes e estética. Nossa missão é proporcionar saúde
+                    bucal e bem-estar, com atendimento personalizado e tecnologia de ponta. Na Senna Smile, você
+                    encontra um time dedicado a transformar sorrisos e cuidar da sua saúde.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="custom-footer mt-4">
+        <div class="container py-3 text-center">
+            <div class="footer-brand d-flex align-items-center justify-content-center">
+                <span>Clínica Odontológica</span>
+                <img src="assets/Logoo.png" alt="Logo da Clínica" class="ml-2" style="max-height: 50px;">
+            </div>
+            <p class="footer-text mt-3">&copy; 2024 Clínica Odontológica. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

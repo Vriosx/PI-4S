@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar/Cadastrar - Clínica Odontológica</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/entrar.css">
+    <script src="script/login.js" defer></script>
+</head>
+
+<body>
+    <header class="custom-header">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="logo d-flex align-items-center">
+               <a class="navbar-brand" th:href="@{/}"><img src="assets/Logoo.png" alt="Logo" height="40"> Clínica
+                    Odontológica</a>
+            </div>
+            <nav>
+                <ul class="nav">
+                    <li class="nav-item"><a th:href="@{/}" class="nav-link">Início</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mt-4">
+        <section class="row justify-content-center">
+            <div class="col-md-6 form-container">
+                <h2 class="text-center">Entrar</h2>
+				<form id="login-form">
+				    <div class="form-group">
+				        <label for="email">E-mail:</label>
+				        <input type="email" id="email" name="email" class="form-control" required>
+				    </div>
+				    <div class="form-group">
+				        <label for="senha">Senha:</label>
+				        <input type="password" id="senha" name="senha" class="form-control" required>
+				    </div>
+				    <button type="submit" class="btn btn-primary btn-block mt-3">Entrar</button>
+				</form>
+
+				<p class="text-center mt-3">Não tem uma conta? <a th:href="@{/cadastro}">Cadastrar-se</a></p>
+            </div>
+        </section>
+    </main>
+
+        <footer class="custom-footer mt-4">
+        <div class="container py-3 text-center">
+            <div class="footer-brand d-flex align-items-center justify-content-center">
+                <span>Clínica Odontológica</span>
+                <img src="assets/Logoo.png" alt="Logo da Clínica" class="ml-2" style="max-height: 50px;">
+            </div>
+            <p class="footer-text mt-3">&copy; 2024 Clínica Odontológica. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const usuarioLogado = localStorage.getItem("usuarioLogado");
+
+        if (usuarioLogado) {
+            const usuario = JSON.parse(usuarioLogado);
+
+            const menuLogout = document.getElementById("menu-logout");
+            if (menuLogout) {
+                menuLogout.classList.remove("d-none");
+            }
+
+            if (usuario.role === "admin") {
+                const menuCrud = document.getElementById("menu-crud");
+                if (menuCrud) {
+                    menuCrud.classList.remove("d-none");
+                }
+            }
+
+            if (usuario.role === "usuario") {
+                const menuAgendamentos = document.getElementById("menu-agendamentos");
+                if (menuAgendamentos) {
+                    menuAgendamentos.classList.remove("d-none");
+                }
+            }
+
+            const menuLogin = document.getElementById("menu-login");
+            if (menuLogin) {
+                menuLogin.classList.add("d-none");
+            }
+        }
+
+        const loginForm = document.getElementById("login-form");
+
+        if (loginForm) {
+            loginForm.addEventListener("submit", async function (event) {
+                event.preventDefault();
+
+                const email = document.getElementById("email").value;
+                const senha = document.getElementById("senha").value;
+
+                try {
+                    const response = await fetch("http://localhost:8080/usuarios");
+
+                    if (!response.ok) {
+                        throw new Error("Erro ao buscar usuários");
+                    }
+
+                    const usuarios = await response.json();
+                    const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+
+                    if (usuario) {
+                        localStorage.setItem("usuarioLogado", JSON.stringify({
+                            email: usuario.email,
+                            senha: usuario.senha,
+                            role: usuario.tipoUsuario
+                        }));
+                        alert("Login bem-sucedido!");
+                        window.location.href = "/";
+                    } else {
+                        alert("E-mail ou senha incorretos!");
+                    }
+
+                } catch (error) {
+                    console.error("Erro no login:", error);
+                    alert("Erro ao tentar fazer login. Tente novamente.");
+                }
+            });
+        }
+
+        const logoutLink = document.getElementById("logout-link");
+        if (logoutLink) {
+            logoutLink.addEventListener("click", function (event) {
+                event.preventDefault();
+                localStorage.removeItem("usuarioLogado");
+                alert("Logout realizado com sucesso!");
+                window.location.href = "/";
+            });
+        }
+    });
+    </script>
+</body>
+</html>
+
